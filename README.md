@@ -19,7 +19,7 @@ cw20-wrap = { git = "https://github.com/archway-network/cw20-wrap.git", version 
 #### Step 2
 * You _should_ ensure the dependency that you just added to `Cargo.toml` does not export `cosmwasm_std::entry_point`, `query` and `execute`.
 
-For example, your contract should _not_ import `entry_point` like this:
+For example, your contract should _not_ import `entry_point`, `query` and `execute` (and so on for `instantiate`, `reply`, `migrate`, etc. as is relevant to your project) like this:
 ```rs
 use cosmwasm_std::{
     entry_point, to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult,
@@ -34,7 +34,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
 }
 ```
 
-Instead, you _should_ feature gate the `entry_point`s like this:
+Instead, you should feature gate your contract entry points like this:
 ```rs
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
