@@ -480,7 +480,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cosmwasm-mcp-example"
+name = "cosmwasm-mcp-template"
 version = "0.1.0"
 dependencies = [
  "anyhow",

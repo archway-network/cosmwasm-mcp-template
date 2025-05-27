@@ -39,7 +39,7 @@ The response provided from this tool is a JSON schema for the QueryMsg enum of t
 smart contract. It would be too verbose to provide it to your chat partner, so 
 summarizing it will be crucial."#;
 
-/// (Optionally) replace the below with a detailed description of any custom query 
+// (Optionally) replace the below with a detailed description of any custom query 
 // responses (if any) provided by queries to the contract your MCP server supports
 // pub static LIST_QUERY_RESPONSE_DESCR: &str = "";
 

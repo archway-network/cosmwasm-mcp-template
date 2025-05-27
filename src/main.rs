@@ -152,13 +152,12 @@ impl CwMcp {
         Ok(CallToolResult::success(vec![Content::text(serialized)]))
     }
 
-    /// (Optionally) if your contract provides any custom query response types
-    /// configure this tool so the MCP agent can access them. Allowing the MCP 
-    /// agent to access the custom query responses enables it to provide smarter 
-    /// advice, and summaries, about exacly what data can be fetched when making 
-    /// a query to the contract.
-    /// @see: src/query.rs
-
+    // (Optionally) if your contract provides any custom query response types
+    // configure this tool so the MCP agent can access them. Allowing the MCP 
+    // agent to access the custom query responses enables it to provide smarter 
+    // advice, and summaries, about exacly what data can be fetched when making 
+    // a query to the contract.
+    // @see: src/query.rs
     // Uncomment (and configure) to use:
     // #[tool(description = LIST_QUERY_RESPONSE_DESCR)]
     // async fn list_query_responses(&self) -> Result<CallToolResult, Error> {
