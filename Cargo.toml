@@ -1,0 +1,22 @@
+[package]
+name = "cosmwasm-mcp-example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0"
+axum = { version = "0.8", features = ["macros"] }
+cosmwasm-std = "2.2.2"
+cw20-wrap = { git = "https://github.com/archway-network/cw20-wrap.git", version = "1.0.0", features = ["library"] }
+rmcp = { git = "https://github.com/modelcontextprotocol/rust-sdk", branch = "main", features = ["transport-streamable-http-server", "transport-io", "transport-sse-server", "transport-worker"] }
+schemars = "0.8.22"
+serde = "1.0.219"
+serde_json = "1.0.140"
+tokio = { version = "1.44.2", features = ["full"] }
+tokio-util = { version = "0.7", features = ["codec"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = [
+    "env-filter",
+    "std",
+    "fmt",
+] }
