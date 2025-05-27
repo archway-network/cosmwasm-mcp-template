@@ -9,13 +9,12 @@ pub mod server;
 use cw20_wrap::msg::{ExecuteMsg, QueryMsg};
 
 use cosmwasm_std::{Coin, CosmosMsg, QueryRequest, WasmMsg, WasmQuery, to_json_binary};
-use rmcp::{
-    Error, ServerHandler, ServiceExt, model::CallToolResult, model::Content, 
-    model::Implementation, model::ProtocolVersion, model::ServerCapabilities, 
-    model::ServerInfo, transport::stdio, tool,
-};
 use rmcp::transport::sse_server::{SseServer, SseServerConfig};
 use rmcp::transport::streamable_http_server::axum::StreamableHttpServer;
+use rmcp::{
+    Error, ServerHandler, ServiceExt, model::CallToolResult, model::Content, model::Implementation,
+    model::ProtocolVersion, model::ServerCapabilities, model::ServerInfo, tool, transport::stdio,
+};
 use schemars::{JsonSchema, schema_for};
 use serde::{Deserialize, Serialize};
 use std::error::Error as StdError;
@@ -45,19 +44,18 @@ async fn main() -> Result<(), Box<dyn StdError>> {
         ServerTransport::Stdio => {
             tracing_subscriber::fmt()
                 .with_env_filter(
-                    EnvFilter::from_default_env()
-                        .add_directive(tracing::Level::DEBUG.into())
+                    EnvFilter::from_default_env().add_directive(tracing::Level::DEBUG.into()),
                 )
                 .with_writer(std::io::stderr)
                 .with_ansi(false)
                 .init();
-            
+
             let mcp_server = CwMcp::new().serve(stdio()).await.inspect_err(|e| {
                 tracing::error!("serving error: {:?}", e);
             })?;
 
             mcp_server.waiting().await?;
-        },
+        }
         ServerTransport::Sse => {
             tracing_subscriber::registry()
                 .with(
@@ -91,9 +89,9 @@ async fn main() -> Result<(), Box<dyn StdError>> {
             let ct = sse_server.with_service(CwMcp::new);
             tokio::signal::ctrl_c().await?;
             ct.cancel();
-        },
+        }
         ServerTransport::StreamableHttp => {
-             tracing_subscriber::registry()
+            tracing_subscriber::registry()
                 .with(
                     tracing_subscriber::EnvFilter::try_from_default_env()
                         .unwrap_or_else(|_| "debug".to_string().into()),
@@ -107,7 +105,7 @@ async fn main() -> Result<(), Box<dyn StdError>> {
 
             tokio::signal::ctrl_c().await?;
             ct.cancel();
-        },
+        }
     }
 
     Ok(())
@@ -153,9 +151,9 @@ impl CwMcp {
     }
 
     // (Optionally) if your contract provides any custom query response types
-    // configure this tool so the MCP agent can access them. Allowing the MCP 
-    // agent to access the custom query responses enables it to provide smarter 
-    // advice, and summaries, about exacly what data can be fetched when making 
+    // configure this tool so the MCP agent can access them. Allowing the MCP
+    // agent to access the custom query responses enables it to provide smarter
+    // advice, and summaries, about exacly what data can be fetched when making
     // a query to the contract.
     // @see: src/query.rs
     // Uncomment (and configure) to use:

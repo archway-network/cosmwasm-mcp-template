@@ -1,6 +1,6 @@
 // System Instructions
 
-/// (Optionally) replace the below with a description that matches the functionality 
+/// (Optionally) replace the below with a description that matches the functionality
 /// provided by the contract which the MCP server to supports
 pub static SERVER_INFO_DESCR: &str = r#"
 This MCP server provides tools for aiding with queries and transactions to 
@@ -27,7 +27,7 @@ smart contract."#;
 
 // Query Instructions
 
-/// (Optionally) replace the below with a more detailed description that matches the 
+/// (Optionally) replace the below with a more detailed description that matches the
 /// query functionality provided by the contract the MCP server to supports
 pub static LIST_QUERY_ENTRY_POINTS_DESCR: &str = r#"
 Call this tool to get a list of possible queries that can be made (e.g. query entry 
@@ -39,11 +39,11 @@ The response provided from this tool is a JSON schema for the QueryMsg enum of t
 smart contract. It would be too verbose to provide it to your chat partner, so 
 summarizing it will be crucial."#;
 
-// (Optionally) replace the below with a detailed description of any custom query 
+// (Optionally) replace the below with a detailed description of any custom query
 // responses (if any) provided by queries to the contract your MCP server supports
 // pub static LIST_QUERY_RESPONSE_DESCR: &str = "";
 
-/// (Optionally) replace the below with a more detailed description of the query 
+/// (Optionally) replace the below with a more detailed description of the query
 /// messages that can be built by the MCP server
 pub static BUILD_QUERY_MSG_DESCR: &str = r#"
 Call this tool to build a prepared query message for a query to the contract. This tool 
@@ -56,7 +56,7 @@ contract addresses, see tool: 'list_contract_deployments'; 2) the QueryMsg varia
 built into a Cosmos QueryRequest; for deriving the appropriate QueryMsg variant (and the 
 calling variant's parameters), see tool: 'list_query_entry_points'."#;
 
-/// (Optionally) replace the below with a more detailed description that matches the 
+/// (Optionally) replace the below with a more detailed description that matches the
 /// execute functionality provided by the contract the MCP server to supports
 pub static LIST_TX_ENTRY_POINTS_DESCR: &str = r#"
 Call this tool to get a list of possible transactions that can be made (e.g.  
