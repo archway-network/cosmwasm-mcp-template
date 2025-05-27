@@ -116,7 +116,7 @@ pub enum QueryMsg {
 ```
 
 The above 2 variants of `QueryMsg` will generate the following embedded descriptions into the generated schemas, which can be very helpful for LLMs that need to interpret your query entry points:
-```json
+```js
 [
     {
       "description": "Get all swaps (enumerable) Return type: ListResponse",
