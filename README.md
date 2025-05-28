@@ -185,7 +185,9 @@ By default, this MCP server provides the following 6 tools and functionality.
 
 ### Connecting MCP to Claude Desktop
 
-For default setups, build a release binary and point the mcp server's `command` to its path. No run arguments (`args`) are required:
+The below instructions assume the MCP server is being built in `stdio` mode (which is the easiest mode to configure for Claude desktop). 
+
+Build a release binary and point the mcp server's `command` to its path. No run arguments (`args`) are required:
 ```js
 // claude_desktop_config.json
 {
