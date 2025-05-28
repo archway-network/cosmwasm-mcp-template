@@ -1,6 +1,25 @@
 # CosmWasm MCP Server Template
 MCP server in Rust, for wrapping query and execute entry point messages to be broadcast by a signer. This project template should work with any CosmWasm contract.
 
+### Building this project
+
+To build this project requires the `nightly` build of Rust, this will allow using edition 2024 of rustc.
+
+```sh
+# Switch rustc to `nightly` channel
+rustup default nightly
+```
+
+```sh
+# Build for development
+cargo build
+```
+
+```sh
+# Build for deployment
+cargo build --release
+```
+
 ### How to Use
 
 This project is an MCP server template that can be used with any CosmWasm contract, but to use this template with your own contracts, you'll need to make a few small changes.
@@ -152,25 +171,6 @@ The above 2 variants of `QueryMsg` will generate the following embedded descript
 1. Name space the contracts (e.g. to avoid duplicate symbol imports)
 2. Implement pattern matching and tool parameters for switching between the different contracts
 3. For a full multi-contract example, see the [Ambur MCP server](https://github.com/phi-labs-ltd/ambur-mcp)
-
-### Building this project
-
-To build this project requires the `nightly` build of Rust, this will allow using edition 2024 of rustc.
-
-```sh
-# Switch rustc to `nightly` channel
-rustup default nightly
-```
-
-```sh
-# Build for development
-cargo build
-```
-
-```sh
-# Build for deployment
-cargo build --release
-```
 
 ### Tools provided by this MCP server template
 
