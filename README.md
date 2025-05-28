@@ -7,7 +7,7 @@ This project is an MCP server template that can be used with any CosmWasm contra
 
 To use this template with your own contract, implement the following _mandatory_ changes:
 
-#### Step 1
+#### Step 1 - Update Cargo.toml
 * Change the contract dependency in `Cargo.toml`
 
 Remove the following line from `Cargo.toml` and replace it with the dependency for your contract:
@@ -16,7 +16,7 @@ Remove the following line from `Cargo.toml` and replace it with the dependency f
 cw20-wrap = { git = "https://github.com/archway-network/cw20-wrap.git", version = "1.0.0", features = ["library"] }
 ```
 
-#### Step 2
+#### Step 2 - Ensure your contract can be built as a library
 * You _should_ ensure the dependency that you just added to `Cargo.toml` does not export `cosmwasm_std::entry_point`, `query` and `execute`.
 
 For example, your contract should _not_ import `entry_point`, `query` and `execute` (and so on for `instantiate`, `reply`, `migrate`, etc. as is relevant to your project) like this:
@@ -52,7 +52,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
 }
 ```
 
-#### Step 3
+#### Step 3 - Update server.rs
 * Change the contract dependency in `src/server.rs`
 
 At the top of the `src/server.rs` file, remove the default [cw20-wrap](https://github.com/archway-network/cw20-wrap/tree/main) dependency, and replace it with the corresponding dependency to your contract. Your contract must publicly export `msg::QueryMsg` and `msg::Execute` for the MCP server to be able to create JSON schemas that AI agents can understand.
@@ -62,7 +62,7 @@ At the top of the `src/server.rs` file, remove the default [cw20-wrap](https://g
 use cw20_wrap::msg::{ExecuteMsg, QueryMsg};
 ```
 
-#### Step 4 (Optional)
+#### Step 4 (Optional) - Enable MCP tools for any custom types
 * If your contract uses any custom types or responses that you think would be beneficial for the AI agent should have access to, there's an example (commented out) in server.rs of how to achieve that (see below snippet from server.rs).
 
 ```rs
@@ -80,10 +80,19 @@ async fn list_query_responses(&self) -> Result<CallToolResult, Error> {
 }
 ```
 
-#### Step 5 (Optional)
+#### Step 5 (Optional) - Customize LLM instructions
 * All server instructions for the system prompt context, and the tool descriptions, are located in `src/instruction.rs`. 
 * The contents of `src/instruction.rs` are basic, working examples. When working with complex contracts, and/or multi-contract systems, you'll likely want to improve the tool and server descriptions to provide more detailed context to the LLM.
 * For examples of how to improve LLM instructions, and make them customized for your contract, have a look at [instruction.rs](https://github.com/phi-labs-ltd/ambur-mcp/blob/server/stream-http/src/instruction.rs) from the [Ambur MCP server](https://github.com/phi-labs-ltd/ambur-mcp).
+
+#### Step 6 (Optional) - Set MCP server transport mode
+* This template supports 3 transport modes: stdio, sse and http-streamable
+* This template defaults to stdio transport mode
+* About the transport modes:
+    - **stdio** - The server will respond using system standard input / output
+    - **sse** - Server side events server ([MDN doc](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events))
+    - **http-streamable** - A newer standard for remote MCP servers that provides JSON API server functionality. ([Claudemcp doc](https://www.claudemcp.com/docs/streamable-http)).
+
 
 ### Optimizing AI Accuracy
 
