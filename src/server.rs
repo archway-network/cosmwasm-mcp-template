@@ -2,13 +2,14 @@
 /// to support
 use cw20_wrap::msg::{ExecuteMsg, QueryMsg};
 
-use cosmwasm_std::{Coin, CosmosMsg, QueryRequest, WasmMsg, WasmQuery, to_json_binary};
+use cosmwasm_std::{Coin, CosmosMsg, QueryRequest, Uint128, WasmMsg, WasmQuery, to_json_binary};
 use rmcp::{
     Error, ServerHandler, model::CallToolResult, model::Content, model::Implementation,
     model::ProtocolVersion, model::ServerCapabilities, model::ServerInfo, tool,
 };
 use schemars::{JsonSchema, schema_for};
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
 use crate::contract::*;
 use crate::execute::*;
@@ -136,11 +137,18 @@ impl CwMcp {
             description = "Optionally include native payment funds to be sent in the transaction (required for any transactions that require native denom payments; e.g. not cw20 payments)"
         )]
         payment: Option<String>,
+        #[tool(param)]
+        #[schemars(
+            description = "Optionally include native payment denom for funds being sent in the transaction (required for any transactions that require native denom payments; e.g. not cw20 payments)"
+        )]
+        payment_denom: Option<String>,
     ) -> Result<CallToolResult, Error> {
-        let funds: Vec<Coin> = if payment.is_some() {
-            let deserialized: Coin =
-                serde_json::from_str(payment.unwrap().as_str()).unwrap_or_default();
-            vec![deserialized]
+        let funds: Vec<Coin> = if payment.is_some() && payment_denom.is_some() {
+            let funds = Coin {
+                denom: payment_denom.unwrap_or_default(),
+                amount: Uint128::from_str(payment.unwrap_or_default().as_str()).unwrap_or_default(),
+            };
+            vec![funds]
         } else {
             vec![]
         };
