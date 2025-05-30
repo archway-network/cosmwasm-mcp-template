@@ -74,14 +74,30 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
 #### Step 3 - Update server.rs
 * Change the contract dependency in `src/server.rs`
 
-At the top of the `src/server.rs` file, remove the default [cw20-wrap](https://github.com/archway-network/cw20-wrap/tree/main) dependency, and replace it with the corresponding dependency to your contract. Your contract must publicly export `msg::QueryMsg` and `msg::Execute` for the MCP server to be able to create JSON schemas that AI agents can understand.
+At the top of the `src/server.rs` file ([see code](https://github.com/archway-network/cosmwasm-mcp-template/blob/main/src/server.rs#L3)), remove the default [cw20-wrap](https://github.com/archway-network/cw20-wrap/tree/main) dependency, and replace it with the corresponding dependency to your contract. Your contract must publicly export `msg::QueryMsg` and `msg::Execute` for the MCP server to be able to create JSON schemas that AI agents can understand.
 
 ```
 /// Replace the below import with the contract you want the MCP server to support
 use cw20_wrap::msg::{ExecuteMsg, QueryMsg};
 ```
 
-#### Step 4 (Optional) - Enable MCP tools for any custom types
+#### Step 4 - Update deployed contract addresses in contract.rs
+
+At the bottom of `src/contract.rs` ([see code](https://github.com/archway-network/cosmwasm-mcp-template/blob/main/src/contract.rs#L22-L25)), update the deployed contract addresses for the mainnet and testnet deployments of your contract. Or, if you want to remove one of the entries, so there's only a testnet or only a mainnet entry, you'll need to remove the entry from the contracts array in the `CwMcp::new()` function ([see code](https://github.com/archway-network/cosmwasm-mcp-template/blob/main/src/server.rs#L35-L46)).
+
+```rs
+/// Replace with your deployed contract addresses.
+/// This helps the query msg and tx msg builders wrap
+/// your query and tx messages to the contract into
+/// CosmWasm's `QueryRequest` and `CosmosMessage` types
+/// that can be broadcast by a rpc enabled wallet tool
+pub static CONTRACT_MAINNET: &str =
+    "archway1gaf9nw7n8v5lpjz9caxjpps006kxfcrzcuc8y5qp4clslhven2ns2g0ule";
+pub static CONTRACT_TESTNET: &str =
+    "archway1r8kepegwhldwqanuurc769l2g0qxlsm2sm6t5rhqjzcerxsgshls267f7a";
+```
+
+#### Step 5 (Optional) - Enable MCP tools for any custom types
 * If your contract uses any custom types or responses that you think would be beneficial for the AI agent should have access to, there's an example (commented out) in server.rs of how to achieve that (see below snippet from server.rs).
 
 ```rs
@@ -99,12 +115,12 @@ async fn list_query_responses(&self) -> Result<CallToolResult, Error> {
 }
 ```
 
-#### Step 5 (Optional) - Customize LLM instructions
+#### Step 6 (Optional) - Customize LLM instructions
 * All server instructions for the system prompt context, and the tool descriptions, are located in `src/instruction.rs`. 
 * The contents of `src/instruction.rs` are basic, working examples. When working with complex contracts, and/or multi-contract systems, you'll likely want to improve the tool and server descriptions to provide more detailed context to the LLM.
 * For examples of how to improve LLM instructions, and make them customized for your contract, have a look at [instruction.rs](https://github.com/phi-labs-ltd/ambur-mcp/blob/server/stream-http/src/instruction.rs) from the [Ambur MCP server](https://github.com/phi-labs-ltd/ambur-mcp).
 
-#### Step 6 (Optional) - Set MCP server transport mode
+#### Step 7 (Optional) - Set MCP server transport mode
 * This template supports 3 transport modes: stdio, sse and http-streamable
 * This template defaults to stdio transport mode
 * About the transport modes:
