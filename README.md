@@ -126,7 +126,7 @@ async fn list_query_responses(&self) -> Result<CallToolResult, Error> {
 * About the transport modes:
     - **stdio** - The server will respond using system standard input / output
     - **sse** - Server side events server ([MDN doc](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events))
-    - **http-streamable** - A newer standard for remote MCP servers that provides JSON API server functionality. ([Claudemcp doc](https://www.claudemcp.com/docs/streamable-http)).
+    - **http-streamable** - A newer standard for remote MCP servers that provides JSON API server functionality ([Claudemcp doc](https://www.claudemcp.com/docs/streamable-http))
 
 
 ### Optimizing AI Accuracy
