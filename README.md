@@ -98,7 +98,7 @@ pub static CONTRACT_TESTNET: &str =
 ```
 
 #### Step 5 (Optional) - Enable MCP tools for any custom types
-* If your contract uses any custom types or responses that you think would be beneficial for the AI agent should have access to, there's an example (commented out) in server.rs of how to achieve that (see below snippet from server.rs).
+* If your contract uses any custom types or responses that you think would be beneficial for the AI agent should have access to, there's an example (commented out) in [server.rs](https://github.com/archway-network/cosmwasm-mcp-template/blob/main/src/server.rs#L65-L77) of how to achieve that (see below snippet from `src/server.rs`).
 
 ```rs
 /// (Optionally) if your contract provides any custom query response types
