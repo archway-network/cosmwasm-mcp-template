@@ -250,15 +250,18 @@ const client = new MultiServerMCPClient({
   additionalToolNamePrefix: "mcp",
   mcpServers: {
     cosmwasm_contract: {
-      transport: "stdio",
-      command: "~/mcp-servers/cosmwasm-mcp-template",   // path to pre-built linux binary 
-                                                        // stored in the Graph repo
-      args: [],
-      restart: {
+      transport: "sse",
+      url: "http://localhost:8000", // Or, URL + IP of a remote host
+      useNodeEventSource: true,
+      reconnect: {
         enabled: true,
-        maxAttempts: 3,
-        delayMs: 1000,
+        maxAttempts: 5,
+        delayMs: 2000,
       },
+      // Or, uncomment to use transport mode `http-streamable`:
+      // url: "http://localhost:8000",
+      // headers: {},
+      // automaticSSEFallback: false
     },
   },
 });
